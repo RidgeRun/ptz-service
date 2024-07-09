@@ -1,0 +1,193 @@
+openapi: 3.0.3
+info:
+  title: PTZ Microservice
+  description: >-
+    Documentation for the PTZ microservice API. It allows to perform  pan, tilt and zoom (PTZ) operation
+    over a a 360 (equirectangular) video.
+  contact:
+    email: contact@ridgerun.com
+  version: 1.0.0
+externalDocs:
+  description: Find out more about PTZ Microservice
+  url: https://developer.ridgerun.com
+servers:
+  - url: http://127.0.0.1:5010
+tags:
+  - name: position
+    description: Camera position
+  - name: zoom
+    description: Camera Zoom
+  - name: stream
+    description: Stream Information
+paths:
+  /position:
+    put:
+      tags:
+        - position
+      summary: Updates the camera position
+      description: Updates the camera pan and tilt in digrees
+      operationId: update_position
+      requestBody:
+        description: Update the camera position
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Position'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Operation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    get:
+      tags:
+        - position
+      summary: Gets the camera position
+      description: Gets the camera position
+      operationId: get_position
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Position'
+        '400':
+          description: Operation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+  /zoom:
+    put:
+      tags:
+        - zoom
+      summary: Updates the camera zoom
+      description: Updates the camera zoom
+      operationId: update_zoom
+      requestBody:
+        description: Update the camera zoom
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Zoom'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Operation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    get:
+      tags:
+        - zoom
+      summary: Gets the camera zoom
+      description: Gets the camera zoom
+      operationId: get_zoom
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Zoom'
+        '400':
+          description: Operation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+  /stream:
+    put:
+      tags:
+        - stream
+      summary: Sets the input and output Stream URI
+      description: Sets the input Stream URI and the output stream port and mapping. The input stream could be an RTSP stream URI or a VST stream name
+      operationId: update_stream
+      requestBody:
+        description: Sets the input Stream URI
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Stream'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Operation failed
+    get:
+      tags:
+        - stream
+      summary: Gets the input stream
+      description: Gets the input stream
+      operationId: get_stream
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stream'
+        '400':
+          description: Operation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+components:
+  schemas:
+    Position:
+      required:
+        - pan
+        - tilt
+      type: object
+      properties:
+        pan:
+          type: string
+          format: float
+          example: '45.0'
+        tilt:
+          type: string
+          format: float
+          example: '45.0'
+    Zoom:
+      required:
+        - zoom
+      type: object
+      properties:
+        zoom:
+          type: string
+          format: float
+          example: '2.0'
+    Stream:
+      required:
+        - in_uri
+        - out_port
+        - out_mapping
+      type: object
+      properties:
+        in_uri:
+          type: string
+          example: rtsp://127.0.0.1:5000/stream1
+        out_port:
+          type: integer
+          example: 5555
+        out_mapping:
+          type: string
+          example: stream1
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
