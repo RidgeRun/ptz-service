@@ -1,4 +1,4 @@
-##  PTZ Microservice 1.0.0
+##  PTZ Microservice 1.0.1
 
 PTZ Microservice allows you to navigate a video through PTZ.
 
