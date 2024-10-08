@@ -5,11 +5,11 @@ info:
     Documentation for the PTZ microservice API. It allows to perform  pan, tilt and zoom (PTZ) operation
     over a a 360 (equirectangular) video.
   contact:
-    email: contact@ridgerun.com
+    email: support@ridgerun.com
   version: 1.0.0
 externalDocs:
   description: Find out more about PTZ Microservice
-  url: https://developer.ridgerun.com
+  url: https://developer.ridgerun.com/wiki/index.php/Metropolis_Microservices/RidgeRun_Services/PTZ
 servers:
   - url: http://127.0.0.1:5010
 tags:
